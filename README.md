@@ -19,7 +19,7 @@ diagram.add_level(-9.7,'mCARB1')
 diagram.add_level(-19.8,'mCARB2','last')
 diagram.add_level(20,'mCARBX','last')
 ```
-Show the IDs for understanding how to link the levels:
+Show the IDs (red numbers) for understanding how to link the levels:
 
 ```python
 diagram.plot(show_IDs=True)
