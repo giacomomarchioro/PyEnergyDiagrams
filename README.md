@@ -36,6 +36,10 @@ diagram.add_link(3,4)
 diagram.add_link(3,5)
 diagram.add_link(0,6)
 ```
+For plotting the final result:
+```python
+diagram.plot()
+```
 The results is displayed above.
 ##Trouble shooting and fine tuning
 Most of the times there could be a problem of test padding. There are some parameters that can be changed in this way.
