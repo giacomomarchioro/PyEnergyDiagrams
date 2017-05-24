@@ -5,7 +5,8 @@ This is a simple script to plot energy profile diagrams using Python and matplot
 ##Requirments
   > [matplotlib](http://matplotlib.org/users/installing.html)
   
-##How to use it?
+## How to use it?
+
 Put your script in your Python path.
 
 ```python
@@ -41,7 +42,7 @@ For plotting the final result:
 diagram.plot()
 ```
 The results is displayed above.
-##Trouble shooting and fine tuning
+## Trouble shooting and fine tuning
 Most of the times there could be a problem of test padding. There are some parameters that can be changed in this way.
 ```python
 diagram.offset = 10
