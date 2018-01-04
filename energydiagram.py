@@ -209,7 +209,6 @@ class ED:
  
 if __name__ == '__main__':
         a = ED()
-        print 'Created ED() instance called: a'
         a.add_level(0,'Separated Reactants')
         a.add_level(-5.4,'mlC1')
         a.add_level(-15.6,'mlC2','last',)
@@ -217,7 +216,6 @@ if __name__ == '__main__':
         a.add_level(-9.7,'mCARB1')
         a.add_level(-19.8,'mCARB2','last')
         a.add_level(20,'mCARBX','last')
-        print 'Added levels using a.add_level()'
         a.add_link(0,1)
         a.add_link(0,2)
         a.add_link(2,3)
@@ -225,5 +223,4 @@ if __name__ == '__main__':
         a.add_link(3,4)
         a.add_link(3,5)
         a.add_link(0,6)
-        print 'Added links using a.add_link()'
         a.plot(show_IDs=True)
