@@ -32,6 +32,7 @@ class ED:
         self.top_texts = []
         self.bottom_texts = []
         self.links = []
+        self.arrows = []
         
         
     def add_level(self,energy, bottom_text ='', position = None, color = 'k', 
@@ -82,7 +83,27 @@ class ED:
         self.top_texts.append(top_text)
         self.bottom_texts.append(bottom_text)
         self.links.append(link)
-    
+     
+    def add_arrow(self,start_level_id,end_level_id):
+        '''
+        Method of ED class
+        Add a arrow between two energy levels using IDs of the level. Use
+        self.plot(show_index=True) to show the IDs of the levels.
+
+        Parameters
+        ----------
+        start_level_id : int
+                 Starting level ID
+        end_level_id : int
+                 Ending level ID
+
+        Returns
+        -------
+        Append arrow to self.arrows
+
+        '''
+        self.arrows[start_level_id].append(end_level_id)
+        
     def add_link(self,start_level_id,end_level_id):
         '''
         Method of ED class
@@ -155,6 +176,24 @@ class ED:
                 start = level[1]*(self.dimension+self.space)
                 ax.text(start, level[0]+self.offset, str(ind),
                         horizontalalignment='right',color='red')
+        
+        for idx, arrow in enumerate(self.arrows):
+            # by Kalyan Jyoti Kalita
+            # x1, x2   y1, y2
+            for i in arrow:
+                start = self.positions[idx]*(self.dimension+self.space)
+                x1 = start + 0.5*self.dimension
+                x2 = start + 0.5*self.dimension
+                y1 = self.energies[idx]
+                y2 = self.energies[i]
+                gap = y1-y2
+                gapnew = '{0:.2f}'.format(gap) 
+                middle= y1-0.5*gap          #warning: this way works for negative HOMO/LUMO energies
+                ax.annotate("", xy=(x1,y1), xytext=(x2,middle), arrowprops=dict(color='green', width=1.5, headwidth=5))
+                ax.annotate(s= gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=1.5, headwidth=5, color='green'),
+                        bbox=dict(boxstyle='round', fc='white'),
+                        ha='center', va = 'center')
+        
         
         for idx, link in enumerate(self.links):
             # x1, x2   y1, y2
