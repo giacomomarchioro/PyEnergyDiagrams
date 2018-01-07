@@ -15,13 +15,14 @@ y|
 """
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-
+from box_notation import plot_orbital_boxes
 
 class ED:
     def __init__(self):
         #plot parameters
-        self.dimension = 3
-        self.space = 2
+        self.ratio = 3
+        self.dimension = 3*self.ratio
+        self.space = 2*self.ratio
         self.offset = 1
         self.color_bottom_text = 'blue'
         #data 
@@ -33,7 +34,10 @@ class ED:
         self.bottom_texts = []
         self.links = []
         self.arrows = []
-        
+        self.electons_boxes =[]
+        #matplotlib fiugre handlers        
+        self.fig = None
+        self.ax = None
         
     def add_level(self,energy, bottom_text ='', position = None, color = 'k', 
                   top_text = 'Energy',):
@@ -107,7 +111,7 @@ class ED:
     def add_link(self,start_level_id,end_level_id):
         '''
         Method of ED class
-        Add a link between two energy levels using IDs of the leve. Use
+        Add a link between two energy levels using IDs of the level. Use
         self.plot(show_index=True) to show the IDs of the levels.
         
         Parameters
@@ -123,6 +127,28 @@ class ED:
 
         '''
         self.links[start_level_id].append(end_level_id)
+    
+    def add_electronbox(self,level_id,boxes,electrons,side = 0.5,spacing_f = 5):
+        '''
+        Method of ED class
+        Add a link between two energy levels using IDs of the level. Use
+        self.plot(show_index=True) to show the IDs of the levels.
+        
+        Parameters
+        ----------
+        start_level_id : int 
+                 Starting level ID
+        end_level_id : int 
+                 Ending level ID
+        
+        Returns
+        -------
+        Append link to self.links
+
+        '''
+        x= self.positions[level_id]*(self.dimension+self.space)+self.dimension*0.5
+        y= self.energies[level_id]
+        self.electons_boxes.append((x,y,boxes,electrons,side,spacing_f))
         
      
     def plot(self,show_IDs=False):
@@ -148,17 +174,19 @@ class ED:
 
         '''
         fig = plt.figure()
-        ax = fig.add_subplot(111)
+        ax = fig.add_subplot(111,aspect='equal')
         ax.set_ylabel( "Energy / $kcal$ $mol^{-1}$")
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_visible(False)
+        
         data = zip(self.energies, # 0
                    self.positions, # 1
                    self.bottom_texts, # 2
                    self.top_texts, # 3
                    self.colors) # 4
+            
         for level in data:
             start = level[1]*(self.dimension+self.space)
             ax.hlines(level[0],start,start+self.dimension, color = level[4])
@@ -171,14 +199,15 @@ class ED:
                     level[2], # self.bottom_text
                     horizontalalignment='center',
                     color= self.color_bottom_text)
-        if show_IDs:           
+        if show_IDs:
+            #for showing the ID allowing the user to identify the level
             for ind,level in enumerate(data):
                 start = level[1]*(self.dimension+self.space)
                 ax.text(start, level[0]+self.offset, str(ind),
                         horizontalalignment='right',color='red')
         
         for idx, arrow in enumerate(self.arrows):
-            # by Kalyan Jyoti Kalita
+            # by Kalyan Jyoti Kalita: put arrows between to levels 
             # x1, x2   y1, y2
             for i in arrow:
                 start = self.positions[idx]*(self.dimension+self.space)
@@ -196,6 +225,7 @@ class ED:
         
         
         for idx, link in enumerate(self.links):
+            #here we connect the levels with the links
             # x1, x2   y1, y2
             for i in link:
                 start = self.positions[idx]*(self.dimension+self.space)
@@ -204,8 +234,16 @@ class ED:
                 y1 = self.energies[idx]
                 y2 = self.energies[i]
                 l = Line2D([x1,x2],[y1,y2], ls='--',linewidth = 0.5, color= 'k')                                    
-                ax.add_line(l) 
-        return fig, ax
+                ax.add_line(l)
+        
+        for box in self.electons_boxes:
+            #here we add the boxes
+            # x,y,boxes,electrons,side,spacing_f
+            x,y,boxes,electrons,side,spacing_f = box
+            plot_orbital_boxes(ax,x,y,boxes,electrons,side,spacing_f)
+        
+        self.fig = fig
+        self.ax = ax
  
 if __name__ == '__main__':
         a = ED()
@@ -223,4 +261,5 @@ if __name__ == '__main__':
         a.add_link(3,4)
         a.add_link(3,5)
         a.add_link(0,6)
-        a.plot(show_IDs=True)
+        a.add_electronbox(2,3,3,2,3)
+        ax, fig = a.plot(show_IDs=True)
