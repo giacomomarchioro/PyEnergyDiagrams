@@ -1,7 +1,7 @@
 # PyEnergyDiagrams
 This is a simple script to plot energy profile diagrams using Python and matplotlib.
 
-[[PyEnergyDiagrams/md_images/Final.png]]
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Final.png)
 ## Requirments
   > [matplotlib](http://matplotlib.org/users/installing.html)
   
@@ -47,4 +47,4 @@ Most of the times there could be a problem of test padding. There are some param
 ```python
 diagram.offset = 10
 ```
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/Explained.jpg)
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_imagesExplained.jpg)
