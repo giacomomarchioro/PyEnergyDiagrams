@@ -47,4 +47,4 @@ Most of the times there could be a problem of test padding. There are some param
 ```python
 diagram.offset = 10
 ```
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_imagesExplained.jpg)
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Explained.jpg)
