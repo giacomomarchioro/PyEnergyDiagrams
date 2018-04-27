@@ -18,13 +18,15 @@ from matplotlib.lines import Line2D
 from box_notation import plot_orbital_boxes
 
 class ED:
-    def __init__(self):
+    def __init__(self,aspect='equal'):
         #plot parameters
-        self.ratio = 3
-        self.dimension = 3*self.ratio
-        self.space = 2*self.ratio
-        self.offset = 1
+        self.ratio = 1.6181
+        self.dimension = 'auto'
+        self.space = 'auto'
+        self.offset = 'auto'
+        self.offset_ratio = 0.02
         self.color_bottom_text = 'blue'
+        self.aspect = aspect
         #data 
         self.pos_number=0
         self.energies = []
@@ -146,6 +148,7 @@ class ED:
         Append link to self.links
 
         '''
+        self.__auto_adjust()
         x= self.positions[level_id]*(self.dimension+self.space)+self.dimension*0.5
         y= self.energies[level_id]
         self.electons_boxes.append((x,y,boxes,electrons,side,spacing_f))
@@ -174,19 +177,23 @@ class ED:
 
         '''
         fig = plt.figure()
-        ax = fig.add_subplot(111,aspect='equal')
+        ax = fig.add_subplot(111,aspect=self.aspect)
         ax.set_ylabel( "Energy / $kcal$ $mol^{-1}$")
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_visible(False)
         
+        
+        
+        self.__auto_adjust()
+        
         data = zip(self.energies, # 0
                    self.positions, # 1
                    self.bottom_texts, # 2
                    self.top_texts, # 3
                    self.colors) # 4
-            
+         
         for level in data:
             start = level[1]*(self.dimension+self.space)
             ax.hlines(level[0],start,start+self.dimension, color = level[4])
@@ -219,7 +226,7 @@ class ED:
                 gapnew = '{0:.2f}'.format(gap) 
                 middle= y1-0.5*gap          #warning: this way works for negative HOMO/LUMO energies
                 ax.annotate("", xy=(x1,y1), xytext=(x2,middle), arrowprops=dict(color='green', width=1.5, headwidth=5))
-                ax.annotate(s= gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=1.5, headwidth=5, color='green'),
+                ax.annotate(s= gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=6, headwidth=15, color='green'),
                         bbox=dict(boxstyle='round', fc='white'),
                         ha='center', va = 'center')
         
@@ -233,7 +240,7 @@ class ED:
                 x2 = self.positions[i]*(self.dimension+self.space)
                 y1 = self.energies[idx]
                 y2 = self.energies[i]
-                l = Line2D([x1,x2],[y1,y2], ls='--',linewidth = 0.5, color= 'k')                                    
+                l = Line2D([x1,x2],[y1,y2], ls='--',linewidth = 1, color= 'k')                                    
                 ax.add_line(l)
         
         for box in self.electons_boxes:
@@ -242,8 +249,34 @@ class ED:
             x,y,boxes,electrons,side,spacing_f = box
             plot_orbital_boxes(ax,x,y,boxes,electrons,side,spacing_f)
         
-        self.fig = fig
+        #Return fig and ax
         self.ax = ax
+        self.fig = fig
+        
+    def __auto_adjust(self):
+        '''
+        Method of ED class
+        This method use the ratio to set the best dimension and space between
+        the levels.
+        
+        Affects
+        -------
+        self.dimension
+        self.space
+        self.offset
+
+        '''
+        #Max range between the energy
+        Energy_variation = abs( max(self.energies) - min(self.energies))
+        if self.dimension == 'auto' or self.space == 'auto':      
+            #Unique positions of the levels
+            unique_positions = float(len(set(self.positions)))
+            space_for_level = Energy_variation*self.ratio/unique_positions
+            self.dimension = space_for_level*0.7
+            self.space = space_for_level*0.3
+        
+        if self.offset == 'auto':
+            self.offset = Energy_variation*self.offset_ratio
  
 if __name__ == '__main__':
         a = ED()
@@ -261,5 +294,5 @@ if __name__ == '__main__':
         a.add_link(3,4)
         a.add_link(3,5)
         a.add_link(0,6)
-        a.add_electronbox(2,3,3,2,3)
-        ax, fig = a.plot(show_IDs=True)
+        a.add_electronbox(2,3,5,3,3)
+        a.plot(show_IDs=True)
