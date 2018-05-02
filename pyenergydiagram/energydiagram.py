@@ -200,11 +200,13 @@ class ED:
             ax.text(start+self.dimension/2., #X
                     level[0]+self.offset,  #Y
                     level[3], # self.top_texts 
-                    horizontalalignment='center')
+                    horizontalalignment='center',
+                    verticalalignment='bottom')
             ax.text(start+self.dimension/2., # X
                     level[0]-self.offset*2, # Y
                     level[2], # self.bottom_text
                     horizontalalignment='center',
+                    verticalalignment='top',
                     color= self.color_bottom_text)
         if show_IDs:
             #for showing the ID allowing the user to identify the level
@@ -295,4 +297,6 @@ if __name__ == '__main__':
         a.add_link(3,5)
         a.add_link(0,6)
         a.add_electronbox(2,3,5,3,3)
+        a.add_arrow(2,1)
+        a.offset *= 2
         a.plot(show_IDs=True)
