@@ -48,3 +48,9 @@ Most of the times there could be a problem of test padding. There are some param
 diagram.offset = 10
 ```
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Explained.jpg)
+
+If you dont' see anything try:
+```python
+import matplotlib.pyplot as plt
+plt.show()
+```
