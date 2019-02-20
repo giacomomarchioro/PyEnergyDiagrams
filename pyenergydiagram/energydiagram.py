@@ -207,9 +207,9 @@ class ED:
             label = ylabel
         if yunit == None:
             unit = "kcal/mol"
-        elif yunit = "kj":
+        elif yunit == "kj":
             unit = "kJ/mol"
-        elif yunit = "ha":
+        elif yunit == "ha":
             unit = "Ha"
         else
             unit = yunit
