@@ -172,7 +172,7 @@ class ED:
         self.electons_boxes.append((x, y, boxes, electrons, side, spacing_f))
 
 
-    def plot(self, show_IDs=False):
+    def plot(self, show_IDs=False, ylabel=None, yunit=None):
         '''
         Method of ED class
         Plot the energy diagram. Use show_IDs=True for showing the IDs of the
@@ -188,15 +188,34 @@ class ED:
         ----------
         show_IDs : bool
             show the IDs of the energy levels
+        ylabel : string
+            determines the y-axis label, if None is given "Energies" is selected
+        yunit : string
+            determines the y-axis unit, if None is given "kcal/mol" is selected
 
         Returns
         -------
         fig (plt.figure) and ax (fig.add_subplot())
 
         '''
+        # Check for unit and label
+        if ylabel == None:
+            label = "Energy"
+        elif ylabel == "g":
+            label = "$\Delta$G"
+        else:
+            label = ylabel
+        if yunit == None:
+            unit = "kcal/mol"
+        elif yunit = "kj":
+            unit = "kJ/mol"
+        elif yunit = "ha":
+            unit = "Ha"
+        else
+            unit = yunit
         fig = plt.figure()
         ax = fig.add_subplot(111, aspect=self.aspect)
-        ax.set_ylabel("Energy / $kcal$ $mol^{-1}$")
+        ax.set_ylabel(label + " [" + unit +"]")
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
