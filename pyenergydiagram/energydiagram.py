@@ -211,7 +211,7 @@ class ED:
             unit = "kJ/mol"
         elif yunit == "ha":
             unit = "Ha"
-        else
+        else:
             unit = yunit
         fig = plt.figure()
         ax = fig.add_subplot(111, aspect=self.aspect)
