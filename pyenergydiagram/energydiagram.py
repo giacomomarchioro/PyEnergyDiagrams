@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from box_notation import plot_orbital_boxes
 
-
 class ED:
     def __init__(self, aspect='equal'):
         # plot parameters
@@ -28,6 +27,7 @@ class ED:
         self.offset_ratio = 0.02
         self.color_bottom_text = 'blue'
         self.aspect = aspect
+        self.size = 'auto'
         # data
         self.pos_number = 0
         self.energies = []
@@ -43,6 +43,26 @@ class ED:
         # matplotlib fiugre handlers
         self.fig = None
         self.ax = None
+
+    def set_size(self,fsize):
+        '''
+        Method sets size for the figure.
+        
+        Standard formats A3, A4, A5 are predefined. Other formats have to 
+        be given as tupel (x,y) in inches!
+        '''
+        # check if predefined option was choosen:
+        if fsize == ('a4' or 'a5' or 'a3'):
+            if fsize == 'a3':
+                self.size = (16.53, 11.69)
+            elif fsize == 'a4':
+                self.size = (11.69, 8.27)
+            elif fsize == 'a5':
+                self.size = (8.27, 5.85)
+            else:
+                sys.exit('FATAL ERROR in size selection!')
+        else:
+            self.size = fsize
 
     def add_level(self, energy, bottom_text='', position=None, color='k',
                   top_text='Energy', right_text='', left_text=''):
@@ -213,7 +233,11 @@ class ED:
             unit = "Ha"
         else:
             unit = yunit
-        fig = plt.figure()
+        # Check for figure size
+        if self.size == 'auto':
+            fig = plt.figure()
+        else:
+            fig = plt.figure(figsize=self.size)
         ax = fig.add_subplot(111, aspect=self.aspect)
         ax.set_ylabel(label + " [" + unit +"]")
         ax.axes.get_xaxis().set_visible(False)
