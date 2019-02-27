@@ -27,7 +27,7 @@ class ED:
         self.offset_ratio = 0.02
         self.color_bottom_text = 'blue'
         self.aspect = aspect
-        self.size = 'auto'
+        self.size = None
         # data
         self.pos_number = 0
         self.energies = []
@@ -44,7 +44,7 @@ class ED:
         self.fig = None
         self.ax = None
 
-    def set_size(self,fsize):
+    def figsize(self,fsize):
         '''
         Method sets size for the figure.
         
@@ -59,8 +59,6 @@ class ED:
                 self.size = (11.69, 8.27)
             elif fsize == 'a5':
                 self.size = (8.27, 5.85)
-            else:
-                sys.exit('FATAL ERROR in size selection!')
         else:
             self.size = fsize
 
@@ -234,10 +232,7 @@ class ED:
         else:
             unit = yunit
         # Check for figure size
-        if self.size == 'auto':
-            fig = plt.figure()
-        else:
-            fig = plt.figure(figsize=self.size)
+        fig = plt.figure(figsize=self.size)
         ax = fig.add_subplot(111, aspect=self.aspect)
         ax.set_ylabel(label + " [" + unit +"]")
         ax.axes.get_xaxis().set_visible(False)

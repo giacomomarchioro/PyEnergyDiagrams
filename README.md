@@ -54,7 +54,7 @@ If you want your Y-Axis label to be different from `Energies [kcal/mol]` you can
 | `plot(yunit="XYZ")` 	| Energies [XYZ] 
 
 
-You can also set the figure size manually, by using the `set_size()` function before you call `plot()`. The `set_size()` function takes a tupel as input, that specifies the width and height in **inches**.
+You can also set the figure size manually, by using the `figsize()` function before you call `plot()`. The `figsize()` function takes a tupel as input, that specifies the width and height in **inches**.
 
 The results is displayed above.
 ## Trouble shooting and fine tuning
