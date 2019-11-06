@@ -44,7 +44,7 @@ class ED:
         self.fig = None
         self.ax = None
 
-    def figsize(self,fsize):
+    def figuresize(self,fsize):
         '''
         Method sets size for the figure.
         
