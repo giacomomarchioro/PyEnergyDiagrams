@@ -72,7 +72,7 @@ class ED:
 
         Returns
         -------
-        Append to the calss data all the informations regarding the level added
+        Append to the class data all the informations regarding the level added
         '''
 
         if position is None:
@@ -92,6 +92,7 @@ class ED:
         self.left_texts.append(left_text)
         self.right_texts.append(right_text)
         self.links.append(link)
+        self.arrows.append([])
 
     def add_arrow(self, start_level_id, end_level_id):
         '''
@@ -333,6 +334,7 @@ if __name__ == '__main__':
         a.add_link(3,5)
         a.add_link(0,6)
         a.add_electronbox(2,3,5,3,3)
-        #a.add_arrow(2,1)
-        #a.offset *= 2
+        a.add_electronbox(3,3,5,3,3)
+        a.add_arrow(2,1)
+        a.offset *= 2
         a.plot(show_IDs=True)

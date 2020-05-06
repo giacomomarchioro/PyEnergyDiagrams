@@ -72,7 +72,7 @@ def plot_orbital_boxes (ax,x,y,boxes_number, electrons_number, box_side = 1, spa
     #plot the spins using Aufbau
     if electrons_number > 0:
         moduloelectrons = electrons_number%boxes_number
-        print moduloelectrons
+        print(moduloelectrons)
         if moduloelectrons > boxes_number:
             Warning ("electrons_number grater than boxes number")
         if electrons_number <= boxes_number:

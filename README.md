@@ -25,7 +25,7 @@ Show the IDs (red numbers) for understanding how to link the levels:
 ```python
 diagram.plot(show_IDs=True)
 ```
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/With_IDs.png)
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master//md_images/With_IDs.png)
 
 Add the links using `diagram.add_link(starting_level_ID,ending_level_ID)`:
 ```python
