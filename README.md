@@ -2,12 +2,15 @@
 This is a simple script to plot energy profile diagrams using Python and matplotlib.
 
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Final.png)
-## Requirments
-  > [matplotlib](http://matplotlib.org/users/installing.html)
+## Installation 
+If you are new to Python the easiest way to get started is to use a distribution like [Anaconda](https://www.anaconda.com/). Then you can use the terminal to install the module using pip:
+
+    pip install git+https://github.com/giacomomarchioro/PyEnergyDiagrams
+
+The only requirments is [matplotlib](http://matplotlib.org/users/installing.html) which is installed by defult using Anaconda.
   
 ## How to use it?
 
-Put your script in your Python path.
 
 ```python
 from energydiagram import ED

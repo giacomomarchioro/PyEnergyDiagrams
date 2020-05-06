@@ -15,7 +15,7 @@ y|
 """
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from box_notation import plot_orbital_boxes
+from .box_notation import plot_orbital_boxes
 
 
 class ED:
@@ -173,7 +173,7 @@ class ED:
         self.electons_boxes.append((x, y, boxes, electrons, side, spacing_f))
 
 
-    def plot(self, show_IDs=False):
+    def plot(self, show_IDs=False,ylabel="Energy / $kcal$ $mol^{-1}$"):
         '''
         Method of ED class
         Plot the energy diagram. Use show_IDs=True for showing the IDs of the
@@ -197,7 +197,7 @@ class ED:
         '''
         fig = plt.figure()
         ax = fig.add_subplot(111, aspect=self.aspect)
-        ax.set_ylabel("Energy / $kcal$ $mol^{-1}$")
+        ax.set_ylabel(ylabel)
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
