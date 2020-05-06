@@ -1,5 +1,5 @@
 # PyEnergyDiagrams
-This is a simple script to plot energy profile diagrams using Python and matplotlib.
+This is a simple module to plot energy profile diagrams using Python and matplotlib.
 
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Final.png)
 ## Installation 
@@ -42,7 +42,7 @@ diagram.add_link(0,6)
 ```
 For plotting the final result:
 ```python
-diagram.plot()
+diagram.plot(ylabel="Energy / $kcal$ $mol^{-1}$") # this is the default ylabel
 ```
 The results is displayed above.
 ## Trouble shooting and fine tuning
@@ -57,3 +57,15 @@ If you dont' see anything try:
 import matplotlib.pyplot as plt
 plt.show()
 ```
+Remember that once you have done a first attempt for plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.  
+
+```python
+# we adjust some parameters
+diagram.ax.set_ylabel('My label')
+diagram.fig.set_figwidth(10)
+# we replot the figure (sometimes we have to resize with the mouse the figure so we force to refresh)
+diagram.fig.show()
+```
+
+### Contributors
+Thanks to Kalyan Jyoti Kalita for the arrow functionality and O2-AC.
