@@ -261,8 +261,8 @@ class ED:
                 gap = y1-y2
                 gapnew = '{0:.2f}'.format(gap)
                 middle= y1-0.5*gap          #warning: this way works for negative HOMO/LUMO energies
-                ax.annotate("", xy=(x1,y1), xytext=(x2,middle), arrowprops=dict(color='green', width=1.5, headwidth=5))
-                ax.annotate(s= gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=6, headwidth=15, color='green'),
+                ax.annotate("", xy=(x1,y1), xytext=(x2,middle), arrowprops=dict(color='green', width=2.5, headwidth=5))
+                ax.annotate(s= gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=2.5, headwidth=5, color='green'),
                         bbox=dict(boxstyle='round', fc='white'),
                         ha='center', va = 'center')
 
