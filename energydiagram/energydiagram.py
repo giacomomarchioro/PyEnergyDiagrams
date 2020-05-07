@@ -333,8 +333,9 @@ if __name__ == '__main__':
         a.add_link(3,4,color='g')
         a.add_link(3,5)
         a.add_link(0,6)
-        a.add_electronbox(2,3,5,3,3)
-        a.add_electronbox(3,3,5,3,3)
-        a.add_arrow(2,1)
+        a.add_electronbox(level_id=0, boxes=1, electrons=2, side=3, spacing_f=3)
+        a.add_electronbox(3,3,1,3,3)
+        a.add_electronbox(5,3,5,3,3)
+        a.add_arrow(6,4)
         a.offset *= 2
         a.plot(show_IDs=True)

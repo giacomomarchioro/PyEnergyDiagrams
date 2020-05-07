@@ -59,7 +59,7 @@ def plot_orbital_boxes (ax,x,y,boxes_number, electrons_number, box_side = 1, spa
                                   lw=0.1,zorder=10)
             return spin_up 
     
-    #plot the rectangles 
+    # plot the rectangles 
     for i in range(boxes_number):
         square =  patches.Rectangle(
         (Xi+box_side*i, Yi), # X,Y
@@ -71,11 +71,13 @@ def plot_orbital_boxes (ax,x,y,boxes_number, electrons_number, box_side = 1, spa
         edgecolor='k',
         zorder=10)
         ax.add_patch(square)
-    #plot the spins using Aufbau
+    # plot the spins using Aufbau
     if electrons_number > 0:
         moduloelectrons = electrons_number%boxes_number
         if moduloelectrons > boxes_number:
             Warning ("electrons_number grater than boxes number")
+        if moduloelectrons == 0:
+            moduloelectrons = 1
         if electrons_number <= boxes_number:
             for j in range(electrons_number):
                 ax.add_patch(add_spin(Xi+box_side*j,Yi,box_side,direction='up'))
