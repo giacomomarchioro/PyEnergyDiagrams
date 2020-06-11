@@ -17,10 +17,10 @@ from energydiagram import ED
 diagram = ED()
 diagram.add_level(0,'Separated Reactants')
 diagram.add_level(-5.4,'mlC1')
-diagram.add_level(-15.6,'mlC2','last',) #Using 'last' it will be together with the previous level
+diagram.add_level(-15.6,'mlC2','last',) #Using 'last'  or 'l' it will be together with the previous level
 diagram.add_level(28.5,'mTS1',color='g')
 diagram.add_level(-9.7,'mCARB1')
-diagram.add_level(-19.8,'mCARB2','last')
+diagram.add_level(-19.8,'mCARB2','l')
 diagram.add_level(20,'mCARBX','last')
 ```
 Show the IDs (red numbers) for understanding how to link the levels:
@@ -44,6 +44,11 @@ For plotting the final result:
 ```python
 diagram.plot(ylabel="Energy / $kcal$ $mol^{-1}$") # this is the default ylabel
 ```
+To show it:
+```python
+import matplotlib.pyplot as plt
+plt.show()
+```
 The results is displayed above.
 ## Trouble shooting and fine tuning
 Most of the times there could be a problem of test padding. There are some parameters that can be changed in this way.
@@ -52,12 +57,7 @@ diagram.offset = 10
 ```
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Explained.jpg)
 
-If you dont' see anything try:
-```python
-import matplotlib.pyplot as plt
-plt.show()
-```
-Remember that once you have done a first attempt for plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.  
+To make the change effective you have to use the command `diagram.plot()` again. Remember that once you have done a first attempt for plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.  
 
 ```python
 # we adjust some parameters
@@ -66,6 +66,7 @@ diagram.fig.set_figwidth(10)
 # we replot the figure (sometimes we have to resize with the mouse the figure so we force to refresh)
 diagram.fig.show()
 ```
+If you use the command `diagram.plot()` now all the changes will be overwritten, so these minor adjustment must be done after.
 
 ### Contributors
 Thanks to Kalyan Jyoti Kalita for the arrow functionality and O2-AC.

@@ -209,9 +209,9 @@ class ED:
                    self.positions,  # 1
                    self.bottom_texts,  # 2
                    self.top_texts,  # 3
-                   self.colors,  # 4
-                   self.left_texts,  # 5
-                   self.right_texts)  # 6
+                   self.colors,  # 4    
+                   self.right_texts, # 5
+                   self.left_texts,)  # 6
 
         for level in data:
             start = level[1]*(self.dimension+self.space)
