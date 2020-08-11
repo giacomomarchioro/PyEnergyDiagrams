@@ -60,7 +60,10 @@ class ED:
          position  : str
                  The position of the level in the plot. Keep it empty to add
                  the level on the right of the previous level use 'last' as
-                 argument for adding the level to the last position used.
+                 argument for adding the level to the last position used
+                 for the level before.
+                 An integer can be used for adding the level to an arbitrary
+                 position.
                  (default  None)
          color  : str
                  Color of the level  (default  'k')
@@ -78,8 +81,12 @@ class ED:
         if position is None:
             position = self.pos_number + 1
             self.pos_number += 1
-        elif position == 'last':
+        elif isinstance(position,(int,float)):
+            pass
+        elif position == 'last' or position == 'l':
             position = self.pos_number
+        else:
+            raise ValueError("Position must be None or 'last' (abrv. 'l') or in case an integer or float specifing the position. It was: %s" %position)
         if top_text == 'Energy':
             top_text = energy
 
