@@ -69,4 +69,4 @@ diagram.fig.show()
 If you use the command `diagram.plot()` now all the changes will be overwritten, so these minor adjustment must be done after.
 
 ### Contributors
-Thanks to Kalyan Jyoti Kalita for the arrow functionality and O2-AC.
+Thanks to Kalyan Jyoti Kalita for the arrow functionality and O2-AC, agrass15268 for bug fixing.

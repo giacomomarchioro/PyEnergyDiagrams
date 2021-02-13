@@ -72,20 +72,17 @@ def plot_orbital_boxes (ax,x,y,boxes_number, electrons_number, box_side = 1, spa
         zorder=10)
         ax.add_patch(square)
     # plot the spins using Aufbau
+    if electrons_number > boxes_number*2:
+            Warning ("electrons_number grater than number of availabe sites")
     if electrons_number > 0:
-        moduloelectrons = electrons_number%boxes_number
-        if moduloelectrons > boxes_number:
-            Warning ("electrons_number grater than boxes number")
-        if moduloelectrons == 0:
-            moduloelectrons = 1
         if electrons_number <= boxes_number:
-            for j in range(electrons_number):
-                ax.add_patch(add_spin(Xi+box_side*j,Yi,box_side,direction='up'))
+            for e in range(electrons_number):
+                ax.add_patch(add_spin(Xi+box_side*e,Yi,box_side,direction='up'))
         else:
-            for e in range(moduloelectrons):
-                ax.add_patch(add_spin(Xi+box_side*e,Yi,box_side,direction='down'))
-            for j in range(boxes_number):
-                ax.add_patch(add_spin(Xi+box_side*j,Yi,box_side,direction='up'))
+            for e in range(boxes_number):
+                ax.add_patch(add_spin(Xi+box_side*e,Yi,box_side,direction='up'))
+            for j in range(electrons_number - boxes_number):
+                ax.add_patch(add_spin(Xi+box_side*j,Yi,box_side,direction='down'))
 
 if __name__ == '__main__': 
     fig = plt.figure()
