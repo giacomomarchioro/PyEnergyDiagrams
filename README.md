@@ -50,6 +50,34 @@ import matplotlib.pyplot as plt
 plt.show()
 ```
 The results is displayed above.
+
+## Electron box 
+Also electron boexes can be added, the electron spin is automatically change following the aufbau principle.
+
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/boxplot.png)
+
+```python
+from energydiagram import ED
+a = ED()
+a.add_level(0,'2pxy',top_text='')
+a.add_level(10,'$\sigma*$',top_text='')
+a.add_level(5,'$\pi*$','last',top_text='')
+a.add_level(-5,'$\pi$','last',color='g',top_text='')
+a.add_level(-10,'$\sigma$',top_text='',position='l')
+a.add_level(0,'2pxy',top_text='')
+for i in range(1,5):
+    a.add_link(0,i,color='g')
+    a.add_link(i,5,color='b')
+a.add_electronbox(level_id=0, boxes=1, electrons=2, side=1.5, spacing_f=2.5)
+a.add_electronbox(1,2,0,1.5,3)
+a.add_electronbox(2,5,10,1.5,3)
+a.add_electronbox(3,3,4,1.5,3)
+a.add_electronbox(4,3,2,1.5,3)
+a.add_electronbox(5,3,5,1.5,3)
+a.offset *= 1.5
+a.plot(show_IDs=True)
+plt.show()
+```
 ## Trouble shooting and fine tuning
 Most of the times there could be a problem of test padding. There are some parameters that can be changed in this way.
 ```python
