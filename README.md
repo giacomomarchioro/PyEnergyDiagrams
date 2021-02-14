@@ -51,8 +51,8 @@ plt.show()
 ```
 The results is displayed above.
 
-## Electron box 
-Also electron boexes can be added, the electron spin is automatically change following the aufbau principle.
+## Electron boxes 
+Also electron boxes can be added, the electron spin is automatically change following the aufbau principle.
 
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/boxplot.png)
 
