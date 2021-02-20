@@ -91,8 +91,15 @@ To make the change effective you have to use the command `diagram.plot()` again.
 # we adjust some parameters
 diagram.ax.set_ylabel('My label')
 diagram.fig.set_figwidth(10)
+# don't want tikcs on the y label
+diagram.ax.set_yticks([])
+# I want to show on the x axis instead
+diagram.ax.axes.get_xaxis().set_visible(True)
+diagram.ax.spines['bottom'].set_visible(True)
+diagram.ax.set_xlabel(My x label")
 # we replot the figure (sometimes we have to resize with the mouse the figure so we force to refresh)
 diagram.fig.show()
+
 ```
 If you use the command `diagram.plot()` now all the changes will be overwritten, so these minor adjustment must be done after.
 
