@@ -96,7 +96,7 @@ diagram.ax.set_yticks([])
 # I want to show on the x axis instead
 diagram.ax.axes.get_xaxis().set_visible(True)
 diagram.ax.spines['bottom'].set_visible(True)
-diagram.ax.set_xlabel(My x label")
+diagram.ax.set_xlabel("My x label")
 # we replot the figure (sometimes we have to resize with the mouse the figure so we force to refresh)
 diagram.fig.show()
 
