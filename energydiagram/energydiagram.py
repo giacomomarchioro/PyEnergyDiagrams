@@ -223,6 +223,9 @@ class ED:
             self.ax = ax
             self.fig = ax.figure
 
+            # Constrain the target axis to have the proper aspect ratio
+            self.ax.set_aspect(self.aspect)
+
         ax.set_ylabel(ylabel)
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
