@@ -53,23 +53,27 @@ class ED:
         Parameters
         ----------
         energy : int
-                 The energy of the level in Kcal mol-1
-         bottom_text  : str
-                 The text on the bottom of the level (label of the level)
-                 (default '')
-         position  : str
-                 The position of the level in the plot. Keep it empty to add
-                 the level on the right of the previous level use 'last' as
-                 argument for adding the level to the last position used
-                 for the level before.
-                 An integer can be used for adding the level to an arbitrary
-                 position.
-                 (default  None)
-         color  : str
-                 Color of the level  (default  'k')
-         top_text  : str
-                 Text on the top of the level. By default it will print the
-                 energy of the level. (default  'Energy')
+                The energy of the level in Kcal mol-1
+        bottom_text  : str
+                The text on the bottom of the level (label of the level)
+                (default '')
+        right_text  : str
+                The text on the right of the level (default '')
+        left_text  : str
+                The text on the left of the level (default '')
+        position  : str
+                The position of the level in the plot. Keep it empty to add
+                the level on the right of the previous level use 'last' as
+                argument for adding the level to the last position used
+                for the level before.
+                An integer can be used for adding the level to an arbitrary
+                position.
+                (default  None)
+        color  : str
+                Color of the level  (default  'k')
+        top_text  : str
+                Text on the top of the level. By default it will print the
+                energy of the level. (default  'Energy')
 
 
 
@@ -180,7 +184,7 @@ class ED:
         self.electons_boxes.append((x, y, boxes, electrons, side, spacing_f))
 
 
-    def plot(self, show_IDs=False,ylabel="Energy / $kcal$ $mol^{-1}$"):
+    def plot(self, show_IDs=False,ylabel="Energy / $kcal$ $mol^{-1}$", ax: plt.Axes = None):
         '''
         Method of ED class
         Plot the energy diagram. Use show_IDs=True for showing the IDs of the
@@ -196,14 +200,28 @@ class ED:
         ----------
         show_IDs : bool
             show the IDs of the energy levels
+        ylabel : str
+            The label to use on the left-side axis. "Energy / $kcal$
+            $mol^{-1}$" by default.
+        ax : plt.Axes
+            The axes to plot onto. If not specified, a Figure and Axes will be
+            created for you.
 
         Returns
         -------
         fig (plt.figure) and ax (fig.add_subplot())
 
         '''
-        fig = plt.figure()
-        ax = fig.add_subplot(111, aspect=self.aspect)
+
+        # Create a figure and axis if the user didn't specify them.
+        if not ax:
+            fig = plt.figure()
+            ax = fig.add_subplot(111, aspect=self.aspect)
+        # Otherwise register the axes and figure the user passed.
+        else:
+            self.ax = ax
+            self.fig = ax.figure
+
         ax.set_ylabel(ylabel)
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
@@ -295,9 +313,6 @@ class ED:
             x, y, boxes, electrons, side, spacing_f = box
             plot_orbital_boxes(ax, x, y, boxes, electrons, side, spacing_f)
 
-        # Return fig and ax
-        self.ax = ax
-        self.fig = fig
 
     def __auto_adjust(self):
         '''
