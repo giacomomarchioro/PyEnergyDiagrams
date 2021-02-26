@@ -53,23 +53,27 @@ class ED:
         Parameters
         ----------
         energy : int
-                 The energy of the level in Kcal mol-1
-         bottom_text  : str
-                 The text on the bottom of the level (label of the level)
-                 (default '')
-         position  : str
-                 The position of the level in the plot. Keep it empty to add
-                 the level on the right of the previous level use 'last' as
-                 argument for adding the level to the last position used
-                 for the level before.
-                 An integer can be used for adding the level to an arbitrary
-                 position.
-                 (default  None)
-         color  : str
-                 Color of the level  (default  'k')
-         top_text  : str
-                 Text on the top of the level. By default it will print the
-                 energy of the level. (default  'Energy')
+                The energy of the level in Kcal mol-1
+        bottom_text  : str
+                The text on the bottom of the level (label of the level)
+                (default '')
+        right_text  : str
+                The text on the right of the level (default '')
+        left_text  : str
+                The text on the left of the level (default '')
+        position  : str
+                The position of the level in the plot. Keep it empty to add
+                the level on the right of the previous level use 'last' as
+                argument for adding the level to the last position used
+                for the level before.
+                An integer can be used for adding the level to an arbitrary
+                position.
+                (default  None)
+        color  : str
+                Color of the level  (default  'k')
+        top_text  : str
+                Text on the top of the level. By default it will print the
+                energy of the level. (default  'Energy')
 
 
 
@@ -81,12 +85,13 @@ class ED:
         if position is None:
             position = self.pos_number + 1
             self.pos_number += 1
-        elif isinstance(position,(int,float)):
+        elif isinstance(position, (int, float)):
             pass
         elif position == 'last' or position == 'l':
             position = self.pos_number
         else:
-            raise ValueError("Position must be None or 'last' (abrv. 'l') or in case an integer or float specifing the position. It was: %s" %position)
+            raise ValueError(
+                "Position must be None or 'last' (abrv. 'l') or in case an integer or float specifing the position. It was: %s" % position)
         if top_text == 'Energy':
             top_text = energy
 
@@ -175,12 +180,12 @@ class ED:
 
         '''
         self.__auto_adjust()
-        x = self.positions[level_id]*(self.dimension+self.space)+self.dimension*0.5
+        x = self.positions[level_id] * \
+            (self.dimension+self.space)+self.dimension*0.5
         y = self.energies[level_id]
         self.electons_boxes.append((x, y, boxes, electrons, side, spacing_f))
 
-
-    def plot(self, show_IDs=False,ylabel="Energy / $kcal$ $mol^{-1}$"):
+    def plot(self, show_IDs=False, ylabel="Energy / $kcal$ $mol^{-1}$", ax: plt.Axes = None):
         '''
         Method of ED class
         Plot the energy diagram. Use show_IDs=True for showing the IDs of the
@@ -196,14 +201,31 @@ class ED:
         ----------
         show_IDs : bool
             show the IDs of the energy levels
+        ylabel : str
+            The label to use on the left-side axis. "Energy / $kcal$
+            $mol^{-1}$" by default.
+        ax : plt.Axes
+            The axes to plot onto. If not specified, a Figure and Axes will be
+            created for you.
 
         Returns
         -------
         fig (plt.figure) and ax (fig.add_subplot())
 
         '''
-        fig = plt.figure()
-        ax = fig.add_subplot(111, aspect=self.aspect)
+
+        # Create a figure and axis if the user didn't specify them.
+        if not ax:
+            fig = plt.figure()
+            ax = fig.add_subplot(111, aspect=self.aspect)
+        # Otherwise register the axes and figure the user passed.
+        else:
+            self.ax = ax
+            self.fig = ax.figure
+
+            # Constrain the target axis to have the proper aspect ratio
+            self.ax.set_aspect(self.aspect)
+
         ax.set_ylabel(ylabel)
         ax.axes.get_xaxis().set_visible(False)
         ax.spines['top'].set_visible(False)
@@ -213,12 +235,12 @@ class ED:
         self.__auto_adjust()
 
         data = list(zip(self.energies,  # 0
-                   self.positions,  # 1
-                   self.bottom_texts,  # 2
-                   self.top_texts,  # 3
-                   self.colors,  # 4    
-                   self.right_texts, # 5
-                   self.left_texts,))  # 6
+                        self.positions,  # 1
+                        self.bottom_texts,  # 2
+                        self.top_texts,  # 3
+                        self.colors,  # 4
+                        self.right_texts,  # 5
+                        self.left_texts,))  # 6
 
         for level in data:
             start = level[1]*(self.dimension+self.space)
@@ -267,11 +289,12 @@ class ED:
                 y2 = self.energies[i]
                 gap = y1-y2
                 gapnew = '{0:.2f}'.format(gap)
-                middle= y1-0.5*gap          #warning: this way works for negative HOMO/LUMO energies
-                ax.annotate("", xy=(x1,y1), xytext=(x2,middle), arrowprops=dict(color='green', width=2.5, headwidth=5))
-                ax.annotate(s= gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=2.5, headwidth=5, color='green'),
-                        bbox=dict(boxstyle='round', fc='white'),
-                        ha='center', va = 'center')
+                middle = y1-0.5*gap  # warning: this way works for negative HOMO/LUMO energies
+                ax.annotate("", xy=(x1, y1), xytext=(x2, middle), arrowprops=dict(
+                    color='green', width=2.5, headwidth=5))
+                ax.annotate(s=gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=2.5, headwidth=5, color='green'),
+                            bbox=dict(boxstyle='round', fc='white'),
+                            ha='center', va='center')
 
         for idx, link in enumerate(self.links):
             # here we connect the levels with the links
@@ -294,10 +317,6 @@ class ED:
             # x,y,boxes,electrons,side,spacing_f
             x, y, boxes, electrons, side, spacing_f = box
             plot_orbital_boxes(ax, x, y, boxes, electrons, side, spacing_f)
-
-        # Return fig and ax
-        self.ax = ax
-        self.fig = fig
 
     def __auto_adjust(self):
         '''
@@ -324,25 +343,26 @@ class ED:
         if self.offset == 'auto':
             self.offset = Energy_variation*self.offset_ratio
 
+
 if __name__ == '__main__':
-        a = ED()
-        a.add_level(0,'Separated Reactants')
-        a.add_level(-5.4,'mlC1')
-        a.add_level(-15.6,'mlC2','last',)
-        a.add_level(28.5,'mTS1',color='g')
-        a.add_level(-9.7,'mCARB1')
-        a.add_level(-19.8,'mCARB2','last')
-        a.add_level(20,'mCARBX','last')
-        a.add_link(0,1,color='r')
-        a.add_link(0,2)
-        a.add_link(2,3,color='b')
-        a.add_link(1,3)
-        a.add_link(3,4,color='g')
-        a.add_link(3,5)
-        a.add_link(0,6)
-        a.add_electronbox(level_id=0, boxes=1, electrons=2, side=3, spacing_f=3)
-        a.add_electronbox(3,3,1,3,3)
-        a.add_electronbox(5,3,5,3,3)
-        a.add_arrow(6,4)
-        a.offset *= 2
-        a.plot(show_IDs=True)
+    a = ED()
+    a.add_level(0, 'Separated Reactants')
+    a.add_level(-5.4, 'mlC1')
+    a.add_level(-15.6, 'mlC2', 'last',)
+    a.add_level(28.5, 'mTS1', color='g')
+    a.add_level(-9.7, 'mCARB1')
+    a.add_level(-19.8, 'mCARB2', 'last')
+    a.add_level(20, 'mCARBX', 'last')
+    a.add_link(0, 1, color='r')
+    a.add_link(0, 2)
+    a.add_link(2, 3, color='b')
+    a.add_link(1, 3)
+    a.add_link(3, 4, color='g')
+    a.add_link(3, 5)
+    a.add_link(0, 6)
+    a.add_electronbox(level_id=0, boxes=1, electrons=2, side=3, spacing_f=3)
+    a.add_electronbox(3, 3, 1, 3, 3)
+    a.add_electronbox(5, 3, 5, 3, 3)
+    a.add_arrow(6, 4)
+    a.offset *= 2
+    a.plot(show_IDs=True)
