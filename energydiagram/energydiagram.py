@@ -28,6 +28,7 @@ class ED:
         self.offset_ratio = 0.02
         self.color_bottom_text = 'blue'
         self.aspect = aspect
+        self.round_energies_at_digit = "keep all digits"
         # data
         self.pos_number = 0
         self.energies = []
@@ -98,7 +99,10 @@ class ED:
             raise ValueError(
                 "Position must be None or 'last' (abrv. 'l') or in case an integer or float specifing the position. It was: %s" % position)
         if top_text == 'Energy':
-            top_text = energy
+            if self.round_energies_at_digit == "keep all digits":
+                top_text = energy
+            else:
+                top_text = round(energy,self.round_energies_at_digit)
 
         link = []
         self.colors.append(color)
