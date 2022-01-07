@@ -40,12 +40,13 @@ class ED:
         self.links = []
         self.arrows = []
         self.electons_boxes = []
+        self.level_linestyles = []
         # matplotlib fiugre handlers
         self.fig = None
         self.ax = None
 
     def add_level(self, energy, bottom_text='', position=None, color='k',
-                  top_text='Energy', right_text='', left_text=''):
+                  top_text='Energy', right_text='', left_text='',linestyle='solid'):
         '''
         Method of ED class
         This method add a new energy level to the plot.
@@ -53,14 +54,10 @@ class ED:
         Parameters
         ----------
         energy : int
-                The energy of the level in Kcal mol-1
+                 The energy of the level in Kcal mol-1
         bottom_text  : str
                 The text on the bottom of the level (label of the level)
                 (default '')
-        right_text  : str
-                The text on the right of the level (default '')
-        left_text  : str
-                The text on the left of the level (default '')
         position  : str
                 The position of the level in the plot. Keep it empty to add
                 the level on the right of the previous level use 'last' as
@@ -74,12 +71,20 @@ class ED:
         top_text  : str
                 Text on the top of the level. By default it will print the
                 energy of the level. (default  'Energy')
+        right_text  : str
+                Text at the right of the level. (default  '')
+        left_text  : str
+                Text at the left of the level. (default  '')
+        linestyle  : str
+                The linestyle of the level, one of the following values:
+                'solid', 'dashed', 'dashdot', 'dotted' (default  'solid')
+
 
 
 
         Returns
         -------
-        Append to the class data all the informations regarding the level added
+        Append to the class data all the information regarding the level added
         '''
 
         if position is None:
@@ -104,6 +109,7 @@ class ED:
         self.left_texts.append(left_text)
         self.right_texts.append(right_text)
         self.links.append(link)
+        self.level_linestyles.append(linestyle)
         self.arrows.append([])
 
     def add_arrow(self, start_level_id, end_level_id):
@@ -235,16 +241,19 @@ class ED:
         self.__auto_adjust()
 
         data = list(zip(self.energies,  # 0
-                        self.positions,  # 1
-                        self.bottom_texts,  # 2
-                        self.top_texts,  # 3
-                        self.colors,  # 4
-                        self.right_texts,  # 5
-                        self.left_texts,))  # 6
+                   self.positions,  # 1
+                   self.bottom_texts,  # 2
+                   self.top_texts,  # 3
+                   self.colors,  # 4    
+                   self.right_texts, # 5
+                   self.left_texts, # 6
+                   self.level_linestyles))  # 7
 
         for level in data:
             start = level[1]*(self.dimension+self.space)
-            ax.hlines(level[0], start, start + self.dimension, color=level[4])
+            ax.hlines(level[0], start, start + self.dimension,
+                      color=level[4],
+                      linestyles = level[7])
             ax.text(start+self.dimension/2.,  # X
                     level[0]+self.offset,  # Y
                     level[3],  # self.top_texts
