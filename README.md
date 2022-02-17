@@ -1,4 +1,6 @@
 # PyEnergyDiagrams
+[![DOI](https://zenodo.org/badge/79893385.svg)](https://zenodo.org/badge/latestdoi/79893385)
+
 This is a simple module to plot energy profile diagrams using Python and matplotlib.
 
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Final.png)
