@@ -15,6 +15,7 @@ The only requirments is [matplotlib](http://matplotlib.org/users/installing.html
 
 
 ```python
+import matplotlib.pyplot as plt
 from energydiagram import ED
 diagram = ED()
 diagram.add_level(0,'Separated Reactants')
@@ -59,6 +60,7 @@ Also electron boxes can be added, the electron spin is automatically changed fol
 ![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/boxplot.png)
 
 ```python
+import matplotlib.pyplot as plt
 from energydiagram import ED
 a = ED()
 a.add_level(0,'2pxy',top_text='')
