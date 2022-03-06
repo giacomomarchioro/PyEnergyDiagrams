@@ -83,7 +83,7 @@ a.plot(show_IDs=True)
 plt.show()
 ```
 ## Trouble shooting and fine tuning
-Most of the times there could be a problem of test padding. There are some parameters that can be changed in this way.
+Most of the times there could be a problem of text padding. There are some parameters that can be changed in this way.
 ```python
 diagram.offset = 10
 ```
