@@ -226,8 +226,8 @@ class ED:
 
         # Create a figure and axis if the user didn't specify them.
         if not ax:
-            fig = plt.figure()
-            ax = fig.add_subplot(111, aspect=self.aspect)
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111, aspect=self.aspect)
         # Otherwise register the axes and figure the user passed.
         else:
             self.ax = ax
@@ -236,11 +236,11 @@ class ED:
             # Constrain the target axis to have the proper aspect ratio
             self.ax.set_aspect(self.aspect)
 
-        ax.set_ylabel(ylabel)
-        ax.axes.get_xaxis().set_visible(False)
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.spines['bottom'].set_visible(False)
+        self.ax.set_ylabel(ylabel)
+        self.ax.axes.get_xaxis().set_visible(False)
+        self.ax.spines['top'].set_visible(False)
+        self.ax.spines['right'].set_visible(False)
+        self.ax.spines['bottom'].set_visible(False)
 
         self.__auto_adjust()
 
@@ -255,30 +255,30 @@ class ED:
 
         for level in data:
             start = level[1]*(self.dimension+self.space)
-            ax.hlines(level[0], start, start + self.dimension,
+            self.ax.hlines(level[0], start, start + self.dimension,
                       color=level[4],
                       linestyles = level[7])
-            ax.text(start+self.dimension/2.,  # X
+            self.ax.text(start+self.dimension/2.,  # X
                     level[0]+self.offset,  # Y
                     level[3],  # self.top_texts
                     horizontalalignment='center',
                     verticalalignment='bottom')
 
-            ax.text(start + self.dimension,  # X
+            self.ax.text(start + self.dimension,  # X
                     level[0],  # Y
                     level[5],  # self.bottom_text
                     horizontalalignment='left',
                     verticalalignment='center',
                     color=self.color_bottom_text)
 
-            ax.text(start,  # X
+            self.ax.text(start,  # X
                     level[0],  # Y
                     level[6],  # self.bottom_text
                     horizontalalignment='right',
                     verticalalignment='center',
                     color=self.color_bottom_text)
 
-            ax.text(start + self.dimension/2.,  # X
+            self.ax.text(start + self.dimension/2.,  # X
                     level[0] - self.offset*2,  # Y
                     level[2],  # self.bottom_text
                     horizontalalignment='center',
@@ -288,7 +288,7 @@ class ED:
             # for showing the ID allowing the user to identify the level
             for ind, level in enumerate(data):
                 start = level[1]*(self.dimension+self.space)
-                ax.text(start, level[0]+self.offset, str(ind),
+                self.ax.text(start, level[0]+self.offset, str(ind),
                         horizontalalignment='right', color='red')
 
         for idx, arrow in enumerate(self.arrows):
@@ -303,9 +303,9 @@ class ED:
                 gap = y1-y2
                 gapnew = '{0:.2f}'.format(gap)
                 middle = y1-0.5*gap  # warning: this way works for negative HOMO/LUMO energies
-                ax.annotate("", xy=(x1, y1), xytext=(x2, middle), arrowprops=dict(
+                self.ax.annotate("", xy=(x1, y1), xytext=(x2, middle), arrowprops=dict(
                     color='green', width=2.5, headwidth=5))
-                ax.annotate(s=gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=2.5, headwidth=5, color='green'),
+                self.ax.annotate(s=gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=2.5, headwidth=5, color='green'),
                             bbox=dict(boxstyle='round', fc='white'),
                             ha='center', va='center')
 
@@ -323,13 +323,13 @@ class ED:
                               ls=i[1],
                               linewidth=i[2],
                               color=i[3])
-                ax.add_line(line)
+                self.ax.add_line(line)
 
         for box in self.electons_boxes:
             # here we add the boxes
             # x,y,boxes,electrons,side,spacing_f
             x, y, boxes, electrons, side, spacing_f = box
-            plot_orbital_boxes(ax, x, y, boxes, electrons, side, spacing_f)
+            plot_orbital_boxes(self.ax, x, y, boxes, electrons, side, spacing_f)
 
     def __auto_adjust(self):
         '''
