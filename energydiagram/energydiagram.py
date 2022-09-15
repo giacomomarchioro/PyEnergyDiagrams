@@ -29,6 +29,10 @@ class ED:
         self.color_bottom_text = 'blue'
         self.aspect = aspect
         self.round_energies_at_digit = "keep all digits"
+        self.top_text_fontsize = "medium"
+        self.bottom_text_fontsize = "medium"
+        self.right_text_fontsize = "medium"
+        self.left_text_fontsize = "medium"
         # data
         self.pos_number = 0
         self.energies = []
@@ -262,28 +266,32 @@ class ED:
                     level[0]+self.offset,  # Y
                     level[3],  # self.top_texts
                     horizontalalignment='center',
-                    verticalalignment='bottom')
+                    verticalalignment='bottom',
+                    fontsize=self.bottom_text_fontsize)
 
             self.ax.text(start + self.dimension,  # X
                     level[0],  # Y
-                    level[5],  # self.bottom_text
+                    level[5],  # self.right_text
                     horizontalalignment='left',
                     verticalalignment='center',
-                    color=self.color_bottom_text)
+                    color=self.color_bottom_text,
+                    fontsize=self.left_text_fontsize)
 
             self.ax.text(start,  # X
                     level[0],  # Y
-                    level[6],  # self.bottom_text
+                    level[6],  # self.left_text
                     horizontalalignment='right',
                     verticalalignment='center',
-                    color=self.color_bottom_text)
+                    color=self.color_bottom_text,
+                    fontsize=self.right_text_fontsize)
 
             self.ax.text(start + self.dimension/2.,  # X
                     level[0] - self.offset*2,  # Y
                     level[2],  # self.bottom_text
                     horizontalalignment='center',
                     verticalalignment='top',
-                    color=self.color_bottom_text)
+                    color=self.color_bottom_text,
+                    fontsize=self.top_text_fontsize)
         if show_IDs:
             # for showing the ID allowing the user to identify the level
             for ind, level in enumerate(data):
@@ -359,6 +367,8 @@ class ED:
 
 if __name__ == '__main__':
     a = ED()
+    a.bottom_text_fontsize='xx-small'
+    a.top_text_fontsize='xx-small'
     a.add_level(0, 'Separated Reactants')
     a.add_level(-5.4, 'mlC1')
     a.add_level(-15.6, 'mlC2', 'last',)
