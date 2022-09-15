@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pyenergydiagram",
-    version="0.1.8",
+    name="energydiagram",
+    version="0.2.0",
     author="Giacomo Marchioro",
     author_email="giacomomarchioro@outlook.com",
     description="A tool for plotting Energy Diagrams using Matplotlib.",
