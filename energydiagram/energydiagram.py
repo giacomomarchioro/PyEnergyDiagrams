@@ -267,7 +267,7 @@ class ED:
                     level[3],  # self.top_texts
                     horizontalalignment='center',
                     verticalalignment='bottom',
-                    fontsize=self.bottom_text_fontsize)
+                    fontsize=self.top_text_fontsize)
 
             self.ax.text(start + self.dimension,  # X
                     level[0],  # Y
@@ -291,7 +291,7 @@ class ED:
                     horizontalalignment='center',
                     verticalalignment='top',
                     color=self.color_bottom_text,
-                    fontsize=self.top_text_fontsize)
+                    fontsize=self.bottom_text_fontsize)
         if show_IDs:
             # for showing the ID allowing the user to identify the level
             for ind, level in enumerate(data):
