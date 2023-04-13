@@ -37,7 +37,6 @@ class ED:
         self.pos_number = 0
         self.energies = []
         self.positions = []
-        self.colors = []
         self.top_texts = []
         self.bottom_texts = []
         self.left_texts = []
@@ -45,13 +44,13 @@ class ED:
         self.links = []
         self.arrows = []
         self.electons_boxes = []
-        self.level_linestyles = []
+        self.level_kwargs = []
         # matplotlib fiugre handlers
         self.fig = None
         self.ax = None
 
-    def add_level(self, energy, bottom_text='', position=None, color='k',
-                  top_text='Energy', right_text='', left_text='',linestyle='solid'):
+    def add_level(self, energy, bottom_text='', position=None,
+                  top_text=None, right_text='', left_text='', **kwargs):
         '''
         Method of ED class
         This method add a new energy level to the plot.
@@ -102,25 +101,24 @@ class ED:
         else:
             raise ValueError(
                 "Position must be None or 'last' (abrv. 'l') or in case an integer or float specifing the position. It was: %s" % position)
-        if top_text == 'Energy':
+        if top_text is None:
             if self.round_energies_at_digit == "keep all digits":
                 top_text = energy
             else:
-                top_text = round(energy,self.round_energies_at_digit)
+                top_text = round(energy, self.round_energies_at_digit)
 
-        link = []
-        self.colors.append(color)
         self.energies.append(energy)
         self.positions.append(position)
         self.top_texts.append(top_text)
         self.bottom_texts.append(bottom_text)
         self.left_texts.append(left_text)
         self.right_texts.append(right_text)
-        self.links.append(link)
-        self.level_linestyles.append(linestyle)
+        self.level_kwargs.append(kwargs)
+
+        self.links.append([])
         self.arrows.append([])
 
-    def add_arrow(self, start_level_id, end_level_id):
+    def add_arrow(self, start_level_id, end_level_id, position='center', text=None, **kwargs):
         '''
         Method of ED class
         Add a arrow between two energy levels using IDs of the level. Use
@@ -138,13 +136,9 @@ class ED:
         Append arrow to self.arrows
 
         '''
-        self.arrows[start_level_id].append(end_level_id)
+        self.arrows[start_level_id].append((end_level_id, position, text, kwargs))
 
-    def add_link(self, start_level_id, end_level_id,
-                 color='k',
-                 ls='--',
-                 linewidth=1,
-                 ):
+    def add_link(self, start_level_id, end_level_id, **kwargs):
         '''
         Method of ED class
         Add a link between two energy levels using IDs of the level. Use
@@ -168,7 +162,7 @@ class ED:
         Append link to self.links
 
         '''
-        self.links[start_level_id].append((end_level_id, ls, linewidth, color))
+        self.links[start_level_id].append((end_level_id, kwargs))
 
     def add_electronbox(self,
                         level_id,
@@ -248,89 +242,119 @@ class ED:
 
         self.__auto_adjust()
 
-        data = list(zip(self.energies,  # 0
+        data = zip(self.energies,  # 0
                    self.positions,  # 1
                    self.bottom_texts,  # 2
                    self.top_texts,  # 3
-                   self.colors,  # 4    
-                   self.right_texts, # 5
-                   self.left_texts, # 6
-                   self.level_linestyles))  # 7
+                   self.right_texts,  # 5
+                   self.left_texts,  # 6
+                   self.level_kwargs)  # 7
 
-        for level in data:
-            start = level[1]*(self.dimension+self.space)
-            self.ax.hlines(level[0], start, start + self.dimension,
-                      color=level[4],
-                      linestyles = level[7])
-            self.ax.text(start+self.dimension/2.,  # X
-                    level[0]+self.offset,  # Y
-                    level[3],  # self.top_texts
-                    horizontalalignment='center',
-                    verticalalignment='bottom',
-                    fontsize=self.top_text_fontsize)
+        for energy, pos, btext, ttext, rtext, ltext, kwargs in data:
+            start = pos * (self.dimension + self.space)
+            self.ax.hlines(energy, start, start + self.dimension, **kwargs)
+
+            self.ax.text(start + 0.5 * self.dimension,  # X
+                         energy + self.offset,  # Y
+                         ttext,  # self.top_texts
+                         horizontalalignment='center',
+                         verticalalignment='bottom',
+                         fontsize=self.top_text_fontsize)
 
             self.ax.text(start + self.dimension,  # X
-                    level[0],  # Y
-                    level[5],  # self.right_text
-                    horizontalalignment='left',
-                    verticalalignment='center',
-                    color=self.color_bottom_text,
-                    fontsize=self.left_text_fontsize)
+                         energy,  # Y
+                         rtext,  # self.right_text
+                         horizontalalignment='left',
+                         verticalalignment='center',
+                         color=self.color_bottom_text,
+                         fontsize=self.left_text_fontsize)
 
             self.ax.text(start,  # X
-                    level[0],  # Y
-                    level[6],  # self.left_text
-                    horizontalalignment='right',
-                    verticalalignment='center',
-                    color=self.color_bottom_text,
-                    fontsize=self.right_text_fontsize)
+                         energy,  # Y
+                         ltext,  # self.left_text
+                         horizontalalignment='right',
+                         verticalalignment='center',
+                         color=self.color_bottom_text,
+                         fontsize=self.right_text_fontsize)
 
-            self.ax.text(start + self.dimension/2.,  # X
-                    level[0] - self.offset*2,  # Y
-                    level[2],  # self.bottom_text
-                    horizontalalignment='center',
-                    verticalalignment='top',
-                    color=self.color_bottom_text,
-                    fontsize=self.bottom_text_fontsize)
+            self.ax.text(start + 0.5 * self.dimension,  # X
+                         energy - 2 * self.offset,  # Y
+                         btext,  # self.bottom_text
+                         horizontalalignment='center',
+                         verticalalignment='top',
+                         color=self.color_bottom_text,
+                         fontsize=self.bottom_text_fontsize)
         if show_IDs:
             # for showing the ID allowing the user to identify the level
             for ind, level in enumerate(data):
                 start = level[1]*(self.dimension+self.space)
                 self.ax.text(start, level[0]+self.offset, str(ind),
-                        horizontalalignment='right', color='red')
+                             horizontalalignment='right', color='red')
 
         for idx, arrow in enumerate(self.arrows):
             # by Kalyan Jyoti Kalita: put arrows between to levels
             # x1, x2   y1, y2
-            for i in arrow:
-                start = self.positions[idx]*(self.dimension+self.space)
-                x1 = start + 0.5*self.dimension
-                x2 = start + 0.5*self.dimension
+            for idy, position, text, kwargs in arrow:
+                start = self.positions[idx] * (self.dimension + self.space)
+                x = start + 0.5 * self.dimension
                 y1 = self.energies[idx]
-                y2 = self.energies[i]
-                gap = y1-y2
-                gapnew = '{0:.2f}'.format(gap)
-                middle = y1-0.5*gap  # warning: this way works for negative HOMO/LUMO energies
-                self.ax.annotate("", xy=(x1, y1), xytext=(x2, middle), arrowprops=dict(
-                    color='green', width=2.5, headwidth=5))
-                self.ax.annotate(gapnew, xy=(x2, y2), xytext=(x1, middle), color='green', arrowprops=dict(width=2.5, headwidth=5, color='green'),
-                            bbox=dict(boxstyle='round', fc='white'),
-                            ha='center', va='center')
+                y2 = self.energies[idy]
+                gap = y1 - y2
+
+                if text is None:
+                    if self.round_energies_at_digit == 'keep all digits':
+                        text = gap
+                    else:
+                        text = round(gap, self.round_energies_at_digit)
+
+                middle = y1 - 0.5 * gap
+                arrow_width = 20.0
+                arrowprops = {'arrowstyle': '<->',
+                              'shrinkA': 0,
+                              'shrinkB': 0,
+                              'linestyle': '--',
+                              'mutation_scale': arrow_width,
+                              'color': 'green',
+                              }
+                bbox = {'boxstyle': 'round',
+                        'fc': 'white',
+                        'color': 'green',
+                        }
+                arrowprops.update({key: kwargs[key] for key in kwargs if key in arrowprops})
+                bbox.update({key: kwargs[key] for key in kwargs if key in bbox})
+
+                if position == 'center':
+                    ha = 'center'
+                elif position == 'right':
+                    arrowprops['arrowstyle'] = '|-|'
+                    arrowprops['mutation_scale'] *= 0.2
+                    x += 0.5 * self.dimension + 0.2 * self.space
+                    ha = 'left'
+                elif position == 'left':
+                    arrowprops['arrowstyle'] = '|-|'
+                    arrowprops['mutation_scale'] *= 0.2
+                    x += 0.5 * self.dimension - 0.2 * self.space
+                    ha = 'right'
+                else:
+                    raise ValueError
+
+                # double arrow
+                self.ax.annotate("", xy=(x, y1), xytext=(x, y2),
+                                 arrowprops=arrowprops)
+                # text
+                self.ax.text(x, middle, text, bbox=bbox, va='center', ha=ha)
 
         for idx, link in enumerate(self.links):
             # here we connect the levels with the links
             # x1, x2   y1, y2
-            for i in link:
+            for idy, kwargs in link:
                 # i is a tuple: (end_level_id,ls,linewidth,color)
                 start = self.positions[idx]*(self.dimension+self.space)
                 x1 = start + self.dimension
-                x2 = self.positions[i[0]]*(self.dimension+self.space)
+                x2 = self.positions[idy]*(self.dimension+self.space)
                 y1 = self.energies[idx]
-                y2 = self.energies[i[0]]
-                line = Line2D([x1, x2], [y1, y2],
-                              ls=i[1],
-                              linewidth=i[2],
-                              color=i[3])
+                y2 = self.energies[idy]
+                line = Line2D([x1, x2], [y1, y2], **kwargs)
                 self.ax.add_line(line)
 
         for box in self.electons_boxes:
@@ -367,8 +391,8 @@ class ED:
 
 if __name__ == '__main__':
     a = ED()
-    a.bottom_text_fontsize='xx-small'
-    a.top_text_fontsize='xx-small'
+    a.bottom_text_fontsize = 'xx-small'
+    a.top_text_fontsize = 'xx-small'
     a.add_level(0, 'Separated Reactants')
     a.add_level(-5.4, 'mlC1')
     a.add_level(-15.6, 'mlC2', 'last',)
