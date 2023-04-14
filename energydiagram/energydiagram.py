@@ -15,7 +15,7 @@ y|
 """
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from .box_notation import plot_orbital_boxes
+from box_notation import plot_orbital_boxes
 
 
 class ED:
@@ -50,7 +50,7 @@ class ED:
         self.ax = None
 
     def add_level(self, energy, bottom_text='', position=None,
-                  top_text=None, right_text='', left_text='', **kwargs):
+                  top_text=None, right_text='', left_text='', color='k', linewidth=2, **kwargs):
         '''
         Method of ED class
         This method add a new energy level to the plot.
@@ -113,6 +113,8 @@ class ED:
         self.bottom_texts.append(bottom_text)
         self.left_texts.append(left_text)
         self.right_texts.append(right_text)
+        kwargs['color'] = color
+        kwargs['linewidth'] = linewidth
         self.level_kwargs.append(kwargs)
 
         self.links.append([])
@@ -138,7 +140,7 @@ class ED:
         '''
         self.arrows[start_level_id].append((end_level_id, position, text, kwargs))
 
-    def add_link(self, start_level_id, end_level_id, **kwargs):
+    def add_link(self, start_level_id, end_level_id, color='k', ls='dashed', lw=1.0, **kwargs):
         '''
         Method of ED class
         Add a link between two energy levels using IDs of the level. Use
@@ -162,6 +164,9 @@ class ED:
         Append link to self.links
 
         '''
+        kwargs['color'] = color
+        kwargs['ls'] = ls
+        kwargs['lw'] = lw
         self.links[start_level_id].append((end_level_id, kwargs))
 
     def add_electronbox(self,
