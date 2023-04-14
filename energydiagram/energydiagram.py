@@ -390,8 +390,8 @@ class ED:
             # Unique positions of the levels
             unique_positions = float(len(set(self.positions)))
             space_for_level = Energy_variation*self.ratio/unique_positions
-            self.dimension = space_for_level*0.7
-            self.space = space_for_level*0.3
+            self.dimension = space_for_level * 0.5
+            self.space = space_for_level * 0.5
 
         if self.offset == 'auto':
             self.offset = Energy_variation*self.offset_ratio
