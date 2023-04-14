@@ -301,7 +301,8 @@ class ED:
             # x1, x2   y1, y2
             for idy, position, text, kwargs in arrow:
                 start = self.positions[idx] * (self.dimension + self.space)
-                x = start + 0.5 * self.dimension
+                x_arrow = start + 0.5 * self.dimension
+                x_text= x_arrow
                 y1 = self.energies[idx]
                 y2 = self.energies[idy]
                 gap = y1 - y2
@@ -333,21 +334,23 @@ class ED:
                 elif position == 'right':
                     arrowprops['arrowstyle'] = '|-|'
                     arrowprops['mutation_scale'] *= 0.2
-                    x += 0.5 * self.dimension + 0.2 * self.space
+                    x_arrow += 0.5 * self.dimension + 0.2 * self.space
+                    x_text += 0.5 * self.dimension + 0.5 * self.space
                     ha = 'left'
                 elif position == 'left':
                     arrowprops['arrowstyle'] = '|-|'
                     arrowprops['mutation_scale'] *= 0.2
-                    x += 0.5 * self.dimension - 0.2 * self.space
+                    x_arrow -= 0.5 * self.dimension + 0.2 * self.space
+                    x_text -= 0.5 * self.dimension + 0.5 * self.space
                     ha = 'right'
                 else:
                     raise ValueError
 
                 # double arrow
-                self.ax.annotate("", xy=(x, y1), xytext=(x, y2),
+                self.ax.annotate("", xy=(x_arrow, y1), xytext=(x_arrow, y2),
                                  arrowprops=arrowprops)
                 # text
-                self.ax.text(x, middle, text, bbox=bbox, va='center', ha=ha)
+                self.ax.text(x_text, middle, text, bbox=bbox, va='center', ha=ha)
 
         for idx, link in enumerate(self.links):
             # here we connect the levels with the links
