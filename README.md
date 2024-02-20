@@ -3,7 +3,7 @@
 
 This is a simple module to plot energy profile diagrams using Python and matplotlib.
 
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Final.png)
+![alt tag](./md_images/Final.png)
 ## Installation 
 If you are new to Python the easiest way to get started is to use a distribution like [Anaconda](https://www.anaconda.com/). Then you can use the terminal to install the module using pip:
 
@@ -31,7 +31,7 @@ Show the IDs (red numbers) for understanding how to link the levels:
 ```python
 diagram.plot(show_IDs=True)
 ```
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master//md_images/With_IDs.png)
+![alt tag](./md_images/With_IDs.png)
 
 Add the links using `diagram.add_link(starting_level_ID,ending_level_ID)`:
 ```python
@@ -57,7 +57,7 @@ The results is displayed above.
 ## Electron boxes 
 Also electron boxes can be added, the electron spin is automatically changed following the aufbau principle.
 
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/boxplot.png)
+![alt tag](./md_images/boxplot.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -87,7 +87,7 @@ Most of the times there could be a problem of text padding. There are some param
 ```python
 diagram.offset = 10
 ```
-![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/master/md_images/Explained.jpg)
+![alt tag](./md_images/Explained.jpg)
 
 To make the change effective you have to use the command `diagram.plot()` again. Remember that once you have done a first attempt for plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.  
 
