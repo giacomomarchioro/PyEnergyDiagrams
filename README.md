@@ -1,15 +1,15 @@
 # PyEnergyDiagrams
 [![DOI](https://zenodo.org/badge/79893385.svg)](https://zenodo.org/badge/latestdoi/79893385)
 
-This is a simple module to plot energy profile diagrams using Python and matplotlib.
+PyEnergyDiagrams allows the plotting of energy profile diagrams using Python and Matplotlib.
 
 ![alt tag](./md_images/Final.png)
 ## Installation 
-If you are new to Python the easiest way to get started is to use a distribution like [Anaconda](https://www.anaconda.com/). Then you can use the terminal to install the module using pip:
+If you are new to Python, the easiest way to get started is to use a distribution like [Anaconda](https://www.anaconda.com/). Then you can use the terminal to install the module using pip:
 
     pip install git+https://github.com/giacomomarchioro/PyEnergyDiagrams
 
-The only requirments is [matplotlib](http://matplotlib.org/users/installing.html) which is installed by defult using Anaconda.
+The only requirement is [matplotlib](http://matplotlib.org/users/installing.html), which is installed by default using Anaconda.
   
 ## How to use it?
 
@@ -26,7 +26,7 @@ diagram.add_level(-9.7,'mCARB1')
 diagram.add_level(-19.8,'mCARB2','l')
 diagram.add_level(20,'mCARBX','last')
 ```
-Show the IDs (red numbers) for understanding how to link the levels:
+Show the IDs (red numbers) to understand how to link the levels:
 
 ```python
 diagram.plot(show_IDs=True)
@@ -52,7 +52,7 @@ To show it:
 import matplotlib.pyplot as plt
 plt.show()
 ```
-The results is displayed above.
+The results are displayed above.
 
 ## Electron boxes 
 Also electron boxes can be added, the electron spin is automatically changed following the aufbau principle.
@@ -82,14 +82,14 @@ a.offset *= 1.5
 a.plot(show_IDs=True)
 plt.show()
 ```
-## Trouble shooting and fine tuning
-Most of the times there could be a problem of text padding. There are some parameters that can be changed in this way.
+## Troubleshooting and fine-tuning
+Most of the time, there could be a problem with text padding. Some parameters can be changed in this way.
 ```python
 diagram.offset = 10
 ```
 ![alt tag](./md_images/Explained.jpg)
 
-To make the change effective you have to use the command `diagram.plot()` again. Remember that once you have done a first attempt for plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.  
+To make the change effective, you must use the command `diagram.plot()` again. Remember that once you have made a first attempt at plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.  
 
 ```python
 # we adjust some parameters
