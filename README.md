@@ -107,5 +107,10 @@ diagram.fig.show()
 ```
 If you use the command `diagram.plot()` now all the changes will be overwritten, so these minor adjustment must be done after.
 
+## Plot Jablonski-diagram
+An example is provided in the tests directory  
+
+![alt tag](https://github.com/lenhanpham/PyEnergyDiagrams/blob/master/md_images/Ir-complex-Jablonski-diagram.png)
+
 ### Contributors
 Thanks to Kalyan Jyoti Kalita for the arrow functionality and O2-AC, agrass15268 for bug fixing.
