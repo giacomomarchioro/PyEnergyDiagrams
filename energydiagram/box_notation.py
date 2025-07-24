@@ -11,9 +11,34 @@ from matplotlib.path import Path
 
 
 def plot_orbital_boxes (ax,x,y,boxes_number, electrons_number, box_side = 1, spacing_f = 5 ):
+    """Utility for adding an electron box to the energy state.
+
+    Args:
+        ax (matplotlib ax): The matplotlib ax object used for adding the box.
+        x (float): x coordinate of the box.
+        y (float): y coordinate of the box.
+        boxes_number (int): Number of boxes to add.
+        electrons_number (int): Number of electrons to add inside the boxes.
+        box_side (int, optional): The dimension of the side. Defaults to 1.
+        spacing_f (int, optional): The spacing between the boxes. Defaults to 5.
+
+    Returns:
+        None: The function does not return but affects ax object.
+    """
     Xi = x - boxes_number*box_side/2.
     Yi = y - box_side/2.
     def add_spin(Xi,Yi,box_side,direction):
+        """Add spin to electron box.
+
+        Args:
+            Xi (float): X coordinate.
+            Yi (float): Y coordinate.
+            box_side (float): The side of the electron box.
+            direction (str): The direction of the spin "up" or "down".
+
+        Returns:
+            patches.PathPatch : The spin path object.
+        """
         unit = box_side*0.8
         spacing = unit/float(spacing_f)
         hspacing = spacing/2.
