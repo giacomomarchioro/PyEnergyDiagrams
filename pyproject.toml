@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "energydiagram"
+version = "0.2.0"
+description = "A tool for plotting Energy Diagrams using Matplotlib."
+readme = "README.md"
+requires-python = ">=3.6"
+license = { text = "MIT" }
+authors = [
+  { name = "Giacomo Marchioro", email = "giacomomarchioro@outlook.com" }
+]
+dependencies = [
+  "matplotlib"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://github.com/giacomomarchioro/PyEnergyDiagrams"
