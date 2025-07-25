@@ -389,13 +389,13 @@ class ED:
 
         self.__auto_adjust()
 
-        data = zip(self.energies,  # 0
+        data = list(zip(self.energies,  # 0
                    self.positions,  # 1
                    self.bottom_texts,  # 2
                    self.top_texts,  # 3
                    self.right_texts,  # 5
                    self.left_texts,  # 6
-                   self.level_kwargs)  # 7
+                   self.level_kwargs))  # 7
 
         for energy, pos, btext, ttext, rtext, ltext, kwargs in data:
             self.plot_level(energy, pos, btext, ttext, rtext, ltext, **kwargs)
