@@ -1,11 +1,13 @@
 from energydiagram import ED
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 a = ED()
 a.round_energies_at_digit = 2
 a.bottom_text_fontsize = 'small'
 a.top_text_fontsize = 'small'
-a.add_level(0, 'Separated Reactants')
+a.offset = 2
+a.add_level(0, 'Separated\nReactants')
 a.add_level(-5.4, 'mlC1')
 a.add_level(-15.6, 'mlC2', 'last',)
 a.add_level(28.5, 'mTS1', color='g')
@@ -26,4 +28,5 @@ a.add_arrow(3, 4, position='left', color='blue')
 a.add_arrow(6, 4, position='center')
 a.add_arrow(5, 4, position='right', color='r')
 a.plot(show_IDs=True)
-plt.savefig("../md_images/Final.png")
+output_path = Path("..") / "fixtures" / "Final.png"
+plt.savefig(output_path,dpi=400)
