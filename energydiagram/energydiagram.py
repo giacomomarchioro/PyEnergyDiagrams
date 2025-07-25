@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+r"""
 Created on Mon Jan 23 13:09:19 2017
 
 --- Energy profile diagram---
@@ -381,7 +381,7 @@ class ED:
     def plot(
         self, show_IDs=False, ylabel="Energy / $kcal$ $mol^{-1}$", ax: plt.Axes = None
     ):
-        """
+        r"""
         Method of ED class
         Plot the energy diagram. Use show_IDs=True for showing the IDs of the
         energy levels and allowing an easy linking.
