@@ -1,9 +1,9 @@
 # PyEnergyDiagrams
 [![DOI](https://zenodo.org/badge/79893385.svg)](https://zenodo.org/badge/latestdoi/79893385)
 
-`energydiagram` Python module allows the plotting of energy profile diagrams using Python and Matplotlib.
+`energydiagram` Python module for plotting energy profile diagrams using Matplotlib.
 
-![Energy diagram](https://raw.githubusercontent.com/giacomomarchioro/PyEnergyDiagrams/main/tests/fixtures/Final.png)
+![Energy diagram](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/87885c767e4baef5c3390d1d517f31a8defe90c2/tests/fixtures/Final.png?raw=true)
 ## Installation
 If you are new to Python, the easiest way to get started is to use a distribution like [Anaconda](https://www.anaconda.com/). Then you can use the terminal to install the module using pip:
 
@@ -38,7 +38,7 @@ Show the IDs (red numbers) to understand how to link the levels:
 ```python
 diagram.plot(show_IDs=True)
 ```
-![alt tag](https://raw.githubusercontent.com/giacomomarchioro/PyEnergyDiagrams/main/tests/fixtures/With_IDs.png)
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/87885c767e4baef5c3390d1d517f31a8defe90c2/tests/fixtures/With_IDs.png?raw=true)
 
 Add the links using `diagram.add_link(starting_level_ID,ending_level_ID)`:
 ```python
@@ -84,7 +84,7 @@ diagram2.add_electronbox(5,3,5,1.5,3)
 diagram2.offset *= 1.5
 diagram2.plot()
 ```
-![alt tag](https://raw.githubusercontent.com/giacomomarchioro/PyEnergyDiagrams/main/tests/fixtures/boxplot.png)
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/87885c767e4baef5c3390d1d517f31a8defe90c2/tests/fixtures/boxplot.png?raw=true)
 ## Arrows between levels
 You can caluclate the energy betwen two layers and show arrows using:
 
@@ -99,7 +99,7 @@ Most of the time, there could be a problem with text padding. Some parameters ca
 ```python
 diagram.offset = 10
 ```
-![alt tag](https://raw.githubusercontent.com/giacomomarchioro/PyEnergyDiagrams/main/tests/fixtures/Explained.jpg)
+![alt tag](https://github.com/giacomomarchioro/PyEnergyDiagrams/blob/87885c767e4baef5c3390d1d517f31a8defe90c2/tests/fixtures/Explained.jpg?raw=true)
 
 To make the change effective, you must use the command `diagram.plot()` again. Remember that once you have made a first attempt at plotting. You can adjust the plot as every matplotlib plot. For convenience you can access `ax` and `fig` from the instance of the class.
 
